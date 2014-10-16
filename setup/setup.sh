@@ -18,12 +18,12 @@ sudo apt-get -y install git
 cd
 git clone https://github.com/hardcoder77/manage-products.git
 cd manage-products
-cp -R data /var/www/html
-cp -R resources /var/www/html
-cp -R services /var/www/html
-cp .htaccess /var/www/html
-cp config.php /var/www/html
-cp Server.php /var/www/html
+sudo cp -R data /var/www/html
+sudo cp -R resources /var/www/html
+sudo cp -R services /var/www/html
+sudo cp .htaccess /var/www/html
+sudo cp config.php /var/www/html
+sudo cp Server.php /var/www/html
 mysql -u root wings < sql/wings.sql
 cd ..
 rm -rf manage-products
