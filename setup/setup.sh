@@ -10,8 +10,6 @@ sudo adduser ${currectuser} www-data
 sudo chown -R www-data:www-data /var/www
 sudo chmod -R g+rw /var/www
 export DEBIAN_FRONTEND=noninteractive
-debconf-set-selections <<< 'mysql-server mysql-server/root_password password '
-debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password '
 sudo apt-get -q -y install mysql-server
 sudo apt-get -y install php5-mysql
 sudo apt-get -y install git
@@ -26,7 +24,7 @@ sudo cp config.php /var/www/html
 sudo cp Server.php /var/www/html
 echo `ls`
 echo `pwd`
-mysql -uroot -e "create database 'wings'"
+mysql -uroot -e "create database wings"
 mysql -u root wings < sql/wings_2014-10-16.sql
 cd ..
 rm -rf manage-products
