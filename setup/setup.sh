@@ -22,6 +22,7 @@ sudo cp -R services /var/www/html
 sudo cp .htaccess /var/www/html
 sudo cp config.php /var/www/html
 sudo cp Server.php /var/www/html
+sudo cp apache/rewrite.conf /etc/apache2/mods-enabled
 echo `ls`
 echo `pwd`
 mysql -uroot -e "create database wings"
