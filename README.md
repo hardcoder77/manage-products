@@ -110,7 +110,7 @@ Usage:
 * **Query for a product:**      
 	* URL: `/query`
     * Method: `GET`
-    * Query parameter: A single query parameter: attribute key and value. Apart from the key-value pair of an attribute, the parameters `includeAttributes`, `start` and `size can be given.` If multiple attributes are give, `400 Bad Request` will be thrown.
+    * Query parameter: A single query parameter: attribute key and value. Apart from the key-value pair of an attribute, the parameters `includeAttributes`, `start` and `size can be given.` If number of attributes given is not equal to 1, `400 Bad Request` will be thrown. 
     
     Example: `/query?category=mobiles&start=1`
       
