@@ -1,5 +1,5 @@
 <?php
-require __DIR__  .'/../data/ProductData.php';
+require __DIR__ . '/../data/ProductData.php';
 
 
 class ProductService
@@ -30,11 +30,11 @@ class ProductService
         $this->data->commit();
     }
 
-    private function getProductIdArray($products)
+    private function getProductIdArrayFromProductObjects($products, $actualKey)
     {
         $productIdArray = array();
         foreach ($products as $product) {
-            $productIdArray[] = $product["id"];
+            $productIdArray[] = $product[$actualKey];
         }
         return $productIdArray;
     }
@@ -70,8 +70,8 @@ class ProductService
      */
     public function addAttributes($products)
     {
-        if (isset($_GET["includeAttributes"]) && $_GET["includeAttributes"] == "true") {
-            $productIdArray = $this->getProductIdArray($products);
+        if ($this->shouldIncludeAttributes()) {
+            $productIdArray = $this->getProductIdArrayFromProductObjects($products, "id");
             $productAttributesList = $this->data->getAttributesForProducts($productIdArray);
             foreach ($products as $key => $value) {
                 $products[$key]["attributes"] = array();
@@ -109,12 +109,17 @@ class ProductService
         $this->data->commit();
     }
 
-    public function queryProducts()
+    public function queryProducts($start, $size, $shouldIncludeAttributes)
     {
-        list($start, $size) = $this->setupPaginationParams();
-        foreach ($_GET as $key => $value) {
-            print_r($value);
+        list($attributeKey, $attributeValue) = $this->extractAttributeKeyValue();
+        $productIds = $this->data->queryProductByAttribute($start, $size, $attributeKey, $attributeValue);
+        $productIdArray = $this->getProductIdArrayFromProductObjects($productIds, "pid");
+        $products = $this->data->getProductsByProductIds($productIdArray);
+        if($shouldIncludeAttributes) {
+            $_GET["includeAttributes"] = "true";
         }
+        $products = $this->addAttributes($products);
+        return $products;
     }
 
     /**
@@ -133,9 +138,20 @@ class ProductService
         return array($start, $size);
     }
 
+    private function extractAttributeKeyValue()
+    {
+        foreach ($_GET as $key => $value) {
+            return array($key, $value);
+        }
+    }
+
+
+    /**
+     * @return bool
+     */
+    private function shouldIncludeAttributes()
+    {
+        return isset($_GET["includeAttributes"]) && $_GET["includeAttributes"] == "true";
+    }
+
 }
-
-$product = new ProductService();
-$product->getAllProducts();
-
-?>

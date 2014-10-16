@@ -12,15 +12,15 @@ class ProductData
 
     public function connect()
     {
-        $this->connection = new PDO("mysql:host=".DB_HOST.";dbname=".DB_DB, DB_USER, DB_PASSWORD);
+        $this->connection = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_DB, DB_USER, DB_PASSWORD);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
     public function getAllProducts($start, $size)
     {
         $query = $this->connection->prepare("select * from product order by id limit :start, :size");
-        $query->bindValue(':start', (int) $start, PDO::PARAM_INT);
-        $query->bindValue(':size', (int) $size, PDO::PARAM_INT);
+        $query->bindValue(':start', (int)$start, PDO::PARAM_INT);
+        $query->bindValue(':size', (int)$size, PDO::PARAM_INT);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         return $results;
@@ -92,6 +92,30 @@ class ProductData
     public function rollBack()
     {
         $this->connection->rollBack();
+    }
+
+    public function queryProductByAttribute($start, $size, $attributeKey, $attributeValue)
+    {
+        $query = $this->connection->prepare("select distinct pid from product_attributes_values where name = :name and value = :value limit :start, :size");
+        $query->bindValue(':start', (int)$start, PDO::PARAM_INT);
+        $query->bindValue(':size', (int)$size, PDO::PARAM_INT);
+        $query->bindValue(':name', $attributeKey);
+        $query->bindValue(':value', $attributeValue);
+        $query->execute();
+        $productIds = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $productIds;
+    }
+
+    public function getProductsByProductIds($productIds)
+    {
+        $inQuery = implode(',', array_fill(0, count($productIds), '?'));
+        $query = $this->connection->prepare("select * from product where id in (" . $inQuery . ")");
+        foreach ($productIds as $key => $value) {
+            $query->bindValue(($key + 1), $value);
+        }
+        $query->execute();
+        $products = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $products;
     }
 
 

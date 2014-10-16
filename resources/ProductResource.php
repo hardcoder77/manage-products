@@ -69,8 +69,68 @@ class ProductResource
 
     public function queryProducts()
     {
-        $products = $this->productService->queryProducts();
+        list($start, $size) = $this->setupPaginationParams();
+        $shouldIncludeAttributes = $this->shouldIncludeAttributes();
+        if (!$this->checkValidQueryRequest()) {
+            header('HTTP/1.1 400 Bad Request');
+            echo "Wrong number of keys provided";
+        } else {
+            $products = $this->productService->queryProducts($start, $size, $shouldIncludeAttributes);
+            $_GET['start'] = $start;
+            $_GET['size'] = $size;
+            header('Content-type: application/json');
+            $result = array();
+            $result['data'] = $products;
+            $result['start'] = $_GET['start'] ? (int)$_GET['start'] : 0;
+            $result['size'] = sizeof($products);
+            echo json_encode($result);
+        }
     }
 
+    private function checkValidQueryRequest()
+    {
+        $this->unsetPaginationParams();
+        $this->unsetIncludeAttributes();
+        if (sizeof($_GET) != 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
+    private function setupPaginationParams()
+    {
+        $start = 0;
+        $size = 10;
+        if (isset($_GET['start'])) {
+            $start = $_GET['start'];
+        }
+        if (isset($_GET['size'])) {
+            $size = $_GET['size'];
+        }
+        return array($start, $size);
+
+    }
+
+    private function unsetPaginationParams()
+    {
+        if (isset($_GET['start'])) {
+            unset($_GET['start']);
+        }
+        if (isset($_GET['size'])) {
+            unset($_GET['size']);
+        }
+    }
+
+    private function shouldIncludeAttributes()
+    {
+        return isset($_GET["includeAttributes"]) && $_GET["includeAttributes"] == "true";
+    }
+
+    private function unsetIncludeAttributes()
+    {
+        if (isset($_GET["includeAttributes"])) {
+            unset($_GET["includeAttributes"]);
+        }
+    }
 }
