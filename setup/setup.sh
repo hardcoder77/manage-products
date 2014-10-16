@@ -1,7 +1,7 @@
 #!/bin/sh
 export DEBIAN_FRONTEND=noninteractive
 sudo apt-get -y update
-sudo apt-get -y dist-upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 sudo apt-get -y install apache2
 sudo a2enmod rewrite
 sudo apt-get -y install libapache2-mod-php5
