@@ -112,9 +112,18 @@ Usage:
 * **Query for a product:**      
 	* URL: `/query`
     * Method: `GET`
-    * Query parameter: A single query parameter: attribute key and value. Apart from the key-value pair of an attribute, the parameters `includeAttributes`, `start` and `size can be given.` If number of attributes given is not equal to 1, `400 Bad Request` will be thrown. 
+    * Query parameter: A single query parameter: attribute key and value. Apart from the key-value pair of an attribute, the parameters `includeAttributes`, `start` and `size` can be given. If number of attributes given is not equal to 1, `400 Bad Request` will be thrown. 
     
     Example: `/query?category=mobiles&start=1`
+
+* **Update a product:**
+	* URL: `/products/{productName}`
+	* Method: `PUT`
+	* Request Headers: 
+	    * `Content-type:application/json`
+	* Request Body: Same as the body for **add a product**. Product names are not updated, only attributes are updated. Attributes is a mandatory field in the body, else `400 Bad Request` is thrown.
+	* Response: Same as `GET /products/{productName}?includeAttributes=true`. If the product does not exist, `404 Not Found` is thrown.
+	
       
       
 
