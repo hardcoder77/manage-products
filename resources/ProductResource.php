@@ -34,7 +34,7 @@ class ProductResource
             echo "already exists";
         } else {
             $this->productService->addProduct($product);
-            $this->redirect("/products/" . $product['name'] . '?includeAttributes=true', 302);
+            $this->redirect("/products/" . $product['name'] . '?includeAttributes=true', 303);
         }
     }
 
@@ -131,6 +131,25 @@ class ProductResource
     {
         if (isset($_GET["includeAttributes"])) {
             unset($_GET["includeAttributes"]);
+        }
+    }
+
+    public function updateProduct($name)
+    {
+        $product = $this->productService->getProduct($name);
+        if (empty($product)) {
+            header('HTTP/1.1 404 Not Found');
+            echo "Not found";
+        } else {
+            $productBody = $entityBody = file_get_contents('php://input');
+            $productBody = json_decode($productBody, true);
+            if (!isset($productBody['attributes'])) {
+                header('HTTP/1.1 400 Bad Request');
+                echo "'attributes' is a required field";
+            } else {
+                $this->productService->updateProduct($name, $product, $productBody);
+                $this->redirect("/products/" . $name . '?includeAttributes=true', 303);
+            }
         }
     }
 }

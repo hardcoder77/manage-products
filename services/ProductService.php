@@ -154,4 +154,14 @@ class ProductService
         return isset($_GET["includeAttributes"]) && $_GET["includeAttributes"] == "true";
     }
 
+    public function updateProduct($name, $product, $productBody)
+    {
+        $this->data->beginTransaction();
+        $productId = $product["id"];
+        foreach ($productBody["attributes"] as $key => $value) {
+            $this->data->updateProductAttribute($productId, $value['name'], $value['value']);
+        }
+        $this->data->commit();
+    }
+
 }

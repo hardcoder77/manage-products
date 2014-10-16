@@ -118,5 +118,20 @@ class ProductData
         return $products;
     }
 
+    public function updateProductAttribute($productId, $name, $value)
+    {
+        $query = $this->connection->prepare("select * from product_attributes_values where pid = :pid and name = :name");
+        $selectData = [':pid' => $productId, ':name' => $name];
+        $query->execute($selectData);
+        $insertData = [':pid' => $productId, ':name' => $name, ':value' => $value];
+        if ($query->rowCount() > 0) {
+            $query = $this->connection->prepare("update product_attributes_values set value = :value where pid = :pid and name = :name");
+            $query->execute($insertData);
+        } else {
+            $query = $this->connection->prepare("insert into product_attributes_values (pid, name, value) values (:pid, :name, :value)");
+            $query->execute($insertData);
+        }
+    }
+
 
 }

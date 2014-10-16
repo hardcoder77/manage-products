@@ -65,9 +65,6 @@ class Server
     private function handle_name($method, $name)
     {
         switch ($method) {
-            case 'PUT':
-                $this->create_contact($name);
-                break;
 
             case 'DELETE':
                 $this->productResource->deleteProduct($name);
@@ -75,6 +72,10 @@ class Server
 
             case 'GET':
                 $this->productResource->getProduct($name);
+                break;
+
+            case 'PUT':
+                $this->productResource->updateProduct($name);
                 break;
 
             default:
