@@ -26,6 +26,7 @@ sudo cp config.php /var/www/html
 sudo cp Server.php /var/www/html
 echo `ls`
 echo `pwd`
+mysql -uroot -e "create database 'wings'"
 mysql -u root wings < sql/wings_2014-10-16.sql
 cd ..
 rm -rf manage-products
