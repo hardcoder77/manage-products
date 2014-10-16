@@ -24,6 +24,8 @@ sudo cp -R services /var/www/html
 sudo cp .htaccess /var/www/html
 sudo cp config.php /var/www/html
 sudo cp Server.php /var/www/html
+echo `ls`
+echo `pwd`
 mysql -u root wings < sql/wings.sql
 cd ..
 rm -rf manage-products
