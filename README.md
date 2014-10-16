@@ -101,6 +101,8 @@ Usage:
     * Response: Same as `/products/moto-i?includeAttributes=true`
       
       If the product already exists, `409 conflict` will be returned.
+      
+      If the key `name` is not provided, `400 Bad Request` will be returned.
 * **Delete a product:**      
 	* URL: `/products/{productName}`
     * Method: `DELETE`
