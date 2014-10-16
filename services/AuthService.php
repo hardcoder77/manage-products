@@ -1,5 +1,5 @@
 <?php
-require './AuthData.php';
+require __DIR__ . '/../data/AuthData.php';
 
 class AuthService {
 

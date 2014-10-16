@@ -1,6 +1,6 @@
 <?php
 
-require './ProductService.php';
+require(__DIR__ . '/../services/ProductService.php');
 
 class ProductResource
 {

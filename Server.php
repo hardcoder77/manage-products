@@ -1,7 +1,7 @@
 <?php
-require './ProductResource.php';
-require './AuthResource.php';
-require './AuthService.php';
+require './resources/ProductResource.php';
+require './resources/AuthResource.php';
+require './services/AuthService.php';
 
 class Server
 {

@@ -6,7 +6,7 @@ class ProductData
 
     public function __construct()
     {
-        include('./config.php');
+        include(__DIR__ . '/../config.php');
         $this->connect();
     }
 
@@ -18,7 +18,7 @@ class ProductData
 
     public function getAllProducts($start, $size)
     {
-        $query = $this->connection->prepare("select * from product limit :start, :size");
+        $query = $this->connection->prepare("select * from product order by id limit :start, :size");
         $query->bindValue(':start', (int) $start, PDO::PARAM_INT);
         $query->bindValue(':size', (int) $size, PDO::PARAM_INT);
         $query->execute();

@@ -38,7 +38,7 @@ LOCK TABLES `auth` WRITE;
 
 INSERT INTO `auth` (`id`, `username`, `password`)
 VALUES
-	(1,'vicky','YXNkZjEyMzQ=');
+	(1,'admin','YXNkZjEyMzQ=');
 
 /*!40000 ALTER TABLE `auth` ENABLE KEYS */;
 UNLOCK TABLES;

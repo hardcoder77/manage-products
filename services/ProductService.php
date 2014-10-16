@@ -1,5 +1,5 @@
 <?php
-require './ProductData.php';
+require __DIR__  .'/../data/ProductData.php';
 
 
 class ProductService
