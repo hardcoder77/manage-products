@@ -9,6 +9,9 @@ currectuser=`whoami`
 sudo adduser ${currectuser} www-data
 sudo chown -R www-data:www-data /var/www
 sudo chmod -R g+rw /var/www
+export DEBIAN_FRONTEND=noninteractive
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password '
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password '
 sudo apt-get -q -y install mysql-server
 sudo apt-get -y install php5-mysql
 sudo apt-get -y install git
