@@ -26,6 +26,7 @@ sudo cp apache/rewrite.conf /etc/apache2/mods-enabled
 sudo cp apache/000-default.conf /etc/apache2/sites-enabled/
 echo `ls`
 echo `pwd`
+cp sql/wings_2014-10-16.sql ~
 mysql -uroot -e "create database wings"
 mysql -u root wings < sql/wings_2014-10-16.sql
 cd ..
