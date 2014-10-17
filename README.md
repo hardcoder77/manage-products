@@ -25,8 +25,8 @@ Provide those.
 * If your username is different from root and password is not empty:
 	* Update the same in the config.php file in /var/www/html/config.php.
 	* Import the migrations file `[your-home-directory/sql/wings_2014-10-16.sql]` to you mysql using the commands:
-	 	*  `mysql -uroot -e "create database wings"`
-		* `mysql -u root wings < ~/sql/wings_2014-10-16.sql`
+	 	*  `mysql -u username -p -e "create database wings"`
+		* `mysql -u username -p wings < ~/sql/wings_2014-10-16.sql`
 `
 
 * The name of the database is wings by default.
