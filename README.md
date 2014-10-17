@@ -22,10 +22,17 @@ P.S: You need to have sudo access to your machine to run the above.
 
 * You will be asked mysql root username and password while running the above.
 Provide those.
-* If you set the password for the root mysql user, update the same in the config.php file in /var/www/html/config.php.
+* If your username is different from root and password is not empty:
+	* Update the same in the config.php file in /var/www/html/config.php.
+	* Import the migrations file `[your-home-directory/sql/wings_2014-10-16.sql]` to you mysql using the commands:
+	 	*  `mysql -uroot -e "create database wings"`
+		* `mysql -u root wings < ~/sql/wings_2014-10-16.sql`
+`
+
 * The name of the database is wings by default.
 * Basic authentication is used to do the REST operations. You can use `admin:asdf1234` as `username:password` pair.
 * To add more users for doing the above operations, add the corresponding username and the **base64 encoded password** of the user in the `auth` table in the `wings` database.
+
 
 
 
